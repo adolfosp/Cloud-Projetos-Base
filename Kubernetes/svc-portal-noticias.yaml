@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-portal-noticias
+spec:
+  type: NodePort # Cluster ---- NodePort (svc) -> PortalNoticias (pod)
+  ports:
+    - port: 80 # internamente escuta na porta 80
+      nodePort: 30000 ## expoe na 30000 para o mundo externo
+  selector: # quero selecionar o meu pod que tem a label informada abaixo
+    app: "portal-noticias"
