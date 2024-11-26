@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: hollow-namespace
+  labels:
+    name: hollow-namespace
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  namespace: hollow-namespace
+  labels:
+    app: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voll-med
+  labels:
+    app: vollmed # 01 - precisa ser igual
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: vollmed # 01 - precisa ser igual
+  template: # O que vai ser executado
+    metadata:
+      labels:
+        app: vollmed # 01 - precisa ser igual
+    spec:
+      containers:
+      - name: vollmedapi
+        image: leonardosartorello/vollmed:v8
+        ports:
+        - containerPort: 3000 # porta da aplicação
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: dados
+              key: DB_HOST
+        - name: DB_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              name: dados
+              key: DB_DATABASE
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: vollmed-secrets
+              key: DB_PASSWORD
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"

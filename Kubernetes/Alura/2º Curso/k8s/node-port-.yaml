@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodepor-api
+spec:
+  type: NodePort
+  selector: # esse service de nodePort vai se prender a aplicação definida no deployment
+    app: vollmed # deployment -> metadata -> labels -> app
+  ports:
+    - port: 3000
+      targetPort: 3000 
+      nodePort: 30007
